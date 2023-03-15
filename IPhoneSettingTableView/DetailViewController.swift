@@ -71,6 +71,4 @@ class DetailViewController: UIViewController {
         ])
     }
     
-    //MARK: - Actions
-    
 }
