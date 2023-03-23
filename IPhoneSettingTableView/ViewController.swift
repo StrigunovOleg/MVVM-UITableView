@@ -12,46 +12,39 @@ class ViewController: UIViewController {
     
     var viewModel: TableViewModelType?
     
-    //MARK: - Outlets
+    private var settingView: SettingsViewController? {
+        guard isViewLoaded else { return nil }
+        return view as? SettingsViewController
+    }
     
-    
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(ArrowTableViewCell.self, forCellReuseIdentifier: ArrowTableViewCell.identifier)
-        tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        return tableView
-    }()
-    
+
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        view = SettingsViewController()
+        
         title = "Настройки"
+        
+        settingView?.tableView.dataSource = self
+        settingView?.tableView.delegate = self
         
         viewModel = ViewModel()
         
-        setupHierarchy()
-        setupLayout()
+        //cofigurationView()
     }
     
-    
-    //MARK: - Setup
-    
-    private func setupHierarchy() {
-        view.addSubview(tableView)
-    }
-    
-    private func setupLayout() {
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.bottom.right.equalTo(view)
-        }
-    }
+
 }
+
+//private extension ViewController {
+//    func cofigurationView() {
+//        guard let data = viewModel else { return }
+//        settingView?.cofigurationView(model: data)
+//    }
+//}
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -94,3 +87,4 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 }
+

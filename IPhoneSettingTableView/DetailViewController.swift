@@ -38,13 +38,13 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel?.updateTitle.bind { [unowned self] in
+        viewModel?.updateTitle.bind { [weak self] in
             guard let string = $0 else { return }
-            self.label.text = string
+            self?.label.text = string
         }
         
-        delay(delay: 5) { [unowned self] in
-            self.viewModel?.updateTitle.value = " new string "
+        delay(delay: 5) { [weak self] in
+            self?.viewModel?.updateTitle.value = " new string "
         }
     }
 
